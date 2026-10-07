@@ -19,7 +19,7 @@ from ui.components import render_html
 # 1. Konfigurasi Halaman Streamlit
 st.set_page_config(
     page_title="Janji: World Model for Business",
-    page_icon="⚖️",
+    page_icon=None,
     layout="wide",
     initial_sidebar_state="collapsed"
 )

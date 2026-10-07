@@ -79,7 +79,7 @@ def callout(jenis: str, teks: str, subteks: str = ""):
 
 def render_segel_holdout():
     """Menampilkan tombol segel popover holdout di pojok layar."""
-    with st.popover("🔒 Data Uji Terkunci", use_container_width=False):
+    with st.popover("Data Uji Terkunci [SHA-256]", use_container_width=False):
         st.markdown("**Bukti Keaslian Data Uji (SHA-256)**")
         st.code(get_seal_hash(), language="text")
         st.caption(

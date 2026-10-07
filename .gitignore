@@ -23,6 +23,7 @@ data/processed/*
 !app/*.parquet
 !data/agg_*.parquet
 !data/sim_grid.parquet
+!data/sample_orders.parquet
 !data/*.joblib
 *.sqlite
 *.db
@@ -41,3 +42,16 @@ Thumbs.db
 # Dokumen & Eksperimen Internal (Tersimpan aman lokal, disembunyikan dari GitHub)
 _internal/
 experiments/
+
+# Aset Presentasi Lokal (Disimpan lokal, tidak dimasukkan ke Git repositori)
+presentation/
+presentation_deck.html
+*.pptx
+docs/NASKAH_STORYTELLING*.md
+docs/PROMPT_PRESENTATION_DECK.md
+docs/RANCANGAN_PRESENTATION_DECK.md
+docs/storytelling_mobile.html
+scripts/build_presentation_pptx.py
+scripts/build_storytelling_per_slide.py
+scripts/build_storytelling_with_code.py
+scripts/rebuild_spacious_presentation.py

@@ -54,7 +54,7 @@ def render():
         R$ {roi_res['untung_per_ditandai']} {'(Untung Bersih)' if roi_res['untung_per_ditandai'] > 0 else '(Rugi Bersih)'}
         </div>
         <div style="font-size: 13px; color: var(--ink2); margin-top: 4px;">
-        {'✅ Menguntungkan: Memberikan voucher saat paket terbukti tertahan di penjual menghasilkan profit bersih.' if roi_res['untung_per_ditandai'] > 0 else '❌ Merugikan: Memberikan voucher massal saat checkout justru membuang anggaran karena sebagian besar paket sebenarnya selamat.'}
+        {'Menguntungkan: Memberikan voucher saat paket terbukti tertahan di penjual menghasilkan profit bersih.' if roi_res['untung_per_ditandai'] > 0 else 'Merugikan: Memberikan voucher massal saat checkout justru membuang anggaran karena sebagian besar paket sebenarnya selamat.'}
         </div>
         </div>
         </div>
