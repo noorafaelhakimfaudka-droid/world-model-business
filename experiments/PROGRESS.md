@@ -1,12 +1,13 @@
 # Progress Proyek: World Model for Business (Olist)
 
 ## Status Terkini
-- **Langkah Aktif**: Langkah 1 Selesai -> Menuju Langkah 2: Potong Holdout, lalu EDA (PRD §5 Langkah 2)
+- **Langkah Aktif**: Langkah 2 Selesai -> Menuju Langkah 3: Segmentasi Seller & Pelanggan dengan Clustering (PRD §5 Langkah 3)
 - **Status Gerbang**: 
   - G0: ✅ LULUS (Definisi, metrik, rencana analisis terkunci, tes repositori 3/3 lulus)
   - G1: ✅ LULUS (Lapisan data raw-clean-mart terintegrasi, 10/10 tes kontrak data lulus, rekonsiliasi baris tervalidasi)
-  - G2: ⏳ BERIKUTNYA (Potong holdout terkunci & EDA kondisi bisnis)
-  - G3 s.d. G13: ⏸️ BELUM DIMULAI
+  - G2: ✅ LULUS (Holdout terkunci & disegel SHA-256, 10 grafik EDA bisnis berlabel [Data] dengan 'Jadi apa', 13/13 tes lulus)
+  - G3: ⏳ BERIKUTNYA (Segmentasi seller & pelanggan dengan clustering)
+  - G4 s.d. G13: ⏸️ BELUM DIMULAI
 
 ## Yang Sudah Dipahami
 - Peran data scientist pemula dan prinsip transparansi/kejujuran metodologi.
@@ -15,10 +16,12 @@
 - Mengunci definisi istilah ("terlambat", "ulasan buruk") dan kriteria sukses sebelum memegang data atau model.
 - Arsitektur data bertingkat (Raw -> Clean -> Mart) di SQLite dengan skrip SQL bernomor.
 - Rekonsiliasi baris dan ambang toleransi anomali (8 baris anomali dibuang = 0,008% < 0,5%).
-- Pengujian kontrak data otomatis dengan pytest (10 passed).
+- Pemotongan holdout 2 bulan terakhir (12.801 pesanan) dan penyegelan integritas SHA-256.
+- 10 Temuan EDA Kunci: Keterlambatan melonjakkan ulasan buruk dari 8,5% ke 55,4%; 68% ulasan buruk berasal dari pesanan tepat waktu (plafon perbaikan logistik); konsentrasi seller di SP vs pelanggan menyebar di seluruh Brasil.
+- Pengujian kontrak data otomatis dengan pytest (13 passed).
 
 ## Yang Masih Goyah / Perlu Pendalaman
-- Pemotongan holdout 8 minggu terakhir dengan hashing SHA-256 sebelum EDA (Langkah 2).
+- Uji kestabilan klaster seller & pelanggan antar 2 periode waktu berbeda (Langkah 3).
 - Mekanisme teknis rollout World Model dan bootstrap undian acak (Langkah 9).
 - Formula penentuan ukuran sampel uji coba intervensi bisnis (Langkah 11).
 
@@ -37,7 +40,11 @@
 - [x] Laporan kualitas data & rekonsiliasi baris (reports/data_quality_report.md).
 - [x] Tes kontrak data otomatis (tests/test_data_contracts.py) — 10/10 lulus.
 - [x] Gerbang G1 Lulus.
-- [ ] Langkah 2: Potong holdout terkunci (8 minggu terakhir) dan catat checksum SHA-256 sebelum EDA.
+- [x] Langkah 2: Potong holdout terkunci (12.801 pesanan) dan segel dengan SHA-256 (experiments/holdout_checksum.sha256).
+- [x] Tes pembagian waktu (tests/test_time_split.py) — 13/13 tes otomatis lulus.
+- [x] Membangun notebook EDA bisnis 10 visualisasi (notebooks/01_business_eda.ipynb).
+- [x] Gerbang G2 Lulus.
+- [ ] Menuju Langkah 3: Segmentasi seller dan pelanggan dengan clustering (K-Means/RFM).
 
 ## Pertanyaan Terbuka / Keputusan Pending
-- Selesai (DEC-003: SQLite lokal untuk 3 lapis data).
+- Selesai (DEC-004: Holdout 2 bulan kalender dipotong dan disegel sebelum EDA).
