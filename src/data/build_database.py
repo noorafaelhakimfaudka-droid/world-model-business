@@ -1,7 +1,7 @@
 """
 src/data/build_database.py
 Membangun lapisan data bertingkat di SQLite (data/processed/olist.db)
-sesuai PRD §4.1 dan PRD §5 (Langkah 1).
+sesuai Panduan Proyek dan Panduan Proyek (Fase 1).
 Menjalankan:
 1. Pemuatan Raw CSV -> tabel raw_*
 2. Transformasi Clean (sql/02_clean.sql) -> tabel clean_*

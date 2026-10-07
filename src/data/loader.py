@@ -1,7 +1,7 @@
 """
 src/data/loader.py
 Fungsi pembantu tipis untuk memuat data di dalam Jupyter Notebook
-sesuai prinsip "Thin Notebook" (PRD §4.1).
+sesuai prinsip "Thin Notebook" (Panduan Proyek).
 """
 
 from pathlib import Path

@@ -1,6 +1,6 @@
 # Pernyataan Masalah Bisnis (Problem Statement)
 **Proyek: World Model for Business — Edisi Olist**  
-*Mengacu pada PRD §1, PRD §2, dan PRD §5 (Langkah 0)*
+*Kerangka Strategis Pengambilan Keputusan Bisnis Berbasis Data & Simulasi Skenario*
 
 ---
 

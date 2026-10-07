@@ -1,6 +1,6 @@
 -- sql/01_raw.sql
 -- Lapisan 1: Pengecekan dan Verifikasi Tabel Mentah (Raw Layer)
--- Mengacu pada PRD §4.1 dan PRD §5 (Langkah 1)
+-- Tahap Pembersihan Data Historis
 
 -- 1. Verifikasi Jumlah Baris Tiap Tabel Mentah
 SELECT 'raw_orders' AS table_name, COUNT(*) AS row_count FROM raw_orders

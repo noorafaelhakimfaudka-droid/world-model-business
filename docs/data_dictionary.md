@@ -1,5 +1,5 @@
 # Kamus Data (Data Dictionary) — Mart Orders
-*Mengacu pada PRD §3.2, PRD §4.1, dan PRD §5 (Langkah 1 & 4)*
+*Spesifikasi Skema, Point-in-Time Availability, dan Pagar Kebocoran Fitur*
 
 Tabel utama analisis: `mart_orders` di dalam database `data/processed/olist.db`.
 Setiap baris merepresentasikan **satu pesanan unik** (*grain: order_id*).
@@ -26,7 +26,7 @@ Setiap baris merepresentasikan **satu pesanan unik** (*grain: order_id*).
 | `estimated_delivery_days` | REAL | Total hari estimasi pengiriman yang dijanjikan | Saat Checkout (T0) | T0, T1, T2 |
 | `seller_handling_days` | REAL | Durasi seller memproses pesanan (serah kurir - beli) | Saat Penyerahan Kurir (T1) | T1, T2 (Dilarang di T0!) |
 | `carrier_transit_days` | REAL | Durasi kurir mengantar paket (tiba - serah kurir) | Saat Barang Tiba (T2) | Target / Post-transit (Dilarang di T0 & T1!) |
-| `is_late` | INTEGER | Flag pesanan terlambat (1 jika tiba > estimasi, 0 jika tepat waktu) | Saat Barang Tiba (T2) | **TARGET PREDIKSI LANGKAH 6** |
+| `is_late` | INTEGER | Flag pesanan terlambat (1 jika tiba > estimasi, 0 jika tepat waktu) | Saat Barang Tiba (T2) | **TARGET PREDIKSI (Keterlambatan)** |
 | `item_count` | INTEGER | Jumlah total barang fisik dalam 1 pesanan | Saat Checkout (T0) | T0, T1, T2 |
 | `total_items_value` | REAL | Total nilai harga barang (BRL / R$) | Saat Checkout (T0) | T0, T1, T2 |
 | `total_freight_value` | REAL | Total biaya ongkos kirim (BRL / R$) | Saat Checkout (T0) | T0, T1, T2 |
@@ -39,11 +39,11 @@ Setiap baris merepresentasikan **satu pesanan unik** (*grain: order_id*).
 | `total_payment_value` | REAL | Total nilai nominal pembayaran pelanggan | Saat Checkout (T0) | T0, T1, T2 |
 | `max_installments` | INTEGER | Jumlah cicilan pembayaran tertinggi | Saat Checkout (T0) | T0, T1, T2 |
 | `primary_payment_type` | TEXT | Metode pembayaran utama (credit_card, boleto, voucher, debit_card) | Saat Checkout (T0) | T0, T1, T2 |
-| `min_review_score` | INTEGER | Skor bintang review terendah yang diberikan (1–5) | Pasca Pengiriman (T2+) | **TARGET PREDIKSI LANGKAH 7** |
+| `min_review_score` | INTEGER | Skor bintang review terendah yang diberikan (1–5) | Pasca Pengiriman (T2+) | Evaluasi kepuasan |
 | `avg_review_score` | REAL | Rata-rata skor bintang review pelanggan | Pasca Pengiriman (T2+) | Evaluasi kepuasan |
-| `is_bad_review` | INTEGER | Flag ulasan buruk (1 jika bintang 1–2, 0 jika 3–5) | Pasca Pengiriman (T2+) | **TARGET PREDIKSI LANGKAH 7** |
+| `is_bad_review` | INTEGER | Flag ulasan buruk (1 jika bintang 1–2, 0 jika 3–5) | Pasca Pengiriman (T2+) | **TARGET PREDIKSI (Ulasan Buruk)** |
 | `has_review_text` | INTEGER | Flag apakah ulasan menyertakan pesan teks (1/0) | Pasca Pengiriman (T2+) | Evaluasi NLP |
-| `review_comment_message` | TEXT | Isi komentar teks ulasan dari pelanggan (Portugis) | Pasca Pengiriman (T2+) | Bahan NLP Langkah 7 |
+| `review_comment_message` | TEXT | Isi komentar teks ulasan dari pelanggan (Portugis) | Pasca Pengiriman (T2+) | Bahan Analisis Sentimen / NLP |
 
 ---
 

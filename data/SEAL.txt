@@ -1,0 +1,4 @@
+SHA-256: dfa121510c806f39cf24b894ae470a7e512af2a987c5ba7cf40dd871dd3ff84e
+File: data/processed/holdout_orders.parquet
+Orders: 12,801
+Status: SEALED AT DEVELOPMENT START (Opened strictly once after all modeling decisions locked)

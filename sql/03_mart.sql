@@ -1,6 +1,6 @@
 -- sql/03_mart.sql
 -- Lapisan 3: Tabel Analisis dan Mart Terintegrasi (Mart Layer)
--- Mengacu pada PRD §4.1 dan PRD §5 (Langkah 1)
+-- Tahap Pembersihan Data Historis
 
 DROP TABLE IF EXISTS mart_orders;
 

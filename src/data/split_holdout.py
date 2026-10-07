@@ -1,7 +1,7 @@
 """
 src/data/split_holdout.py
 Memotong dan mengunci data holdout (2 bulan terakhir: 2018-07-01 s.d. 2018-08-31)
-SEBELUM EDA dimulai, sesuai PRD §3.1, PRD §5 (Langkah 2), dan Pagar Proyek.
+SEBELUM EDA dimulai, sesuai Panduan Proyek, Panduan Proyek (Fase 2), dan Pagar Proyek.
 Menghasilkan:
 1. data/processed/dev_orders.parquet (Data pengembangan & EDA, Jan 2017 - Jun 2018)
 2. data/processed/holdout_orders.parquet (Data uji akhir TERKUNCI, Jul 2018 - Ags 2018)
@@ -82,7 +82,7 @@ if __name__ == "__main__":
     out = base_dir / "data" / "processed"
     exp = base_dir / "experiments"
 
-    print("=== MEMOTONG DAN MENGUNCI HOLDOUT (PRD §3.1) ===")
+    print("=== MEMOTONG DAN MENGUNCI HOLDOUT (Panduan Proyek) ===")
     results = split_and_lock_holdout(db, out, exp)
     print(f"Data Pengembangan (Dev/EDA) : {int(results['dev_rows']):,} baris ({results['dev_date_range']})")
     print(f"Data Holdout Terkunci       : {int(results['holdout_rows']):,} baris ({results['holdout_date_range']})")

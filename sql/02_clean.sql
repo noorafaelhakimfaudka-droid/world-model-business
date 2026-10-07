@@ -1,6 +1,6 @@
 -- sql/02_clean.sql
 -- Lapisan 2: Pembersihan Data dan Penyelarasan Tipe (Clean Layer)
--- Mengacu pada PRD §4.1 dan PRD §5 (Langkah 1)
+-- Tahap Pembersihan Data Historis
 
 DROP TABLE IF EXISTS clean_customers;
 CREATE TABLE clean_customers AS
