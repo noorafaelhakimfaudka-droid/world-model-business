@@ -1,0 +1,35 @@
+# Lingkungan Python & Virtualenv
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Kredensial & Lingkungan
+.env
+*.env
+.env.*
+
+# Data mentah & olahan (Pagar proyek: Data mentah tidak pernah di-commit)
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+*.csv
+*.parquet
+*.sqlite
+*.db
+
+# Model berat & Cache besar
+artifacts/cache/
+*.pkl
+*.joblib
+
+# OS & IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
