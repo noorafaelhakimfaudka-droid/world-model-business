@@ -1,19 +1,18 @@
 """
 streamlit_app.py
-Root entry point for Streamlit Community Cloud deployment.
-Executes app.py
+Titik masuk utama (entry point) untuk deployment Streamlit Community Cloud.
+Menjalankan app.main() secara bersih tanpa manipulasi modul internal.
 """
+
 import sys
-import os
-import runpy
+from pathlib import Path
 
-root_dir = os.path.dirname(os.path.abspath(__file__))
-if root_dir not in sys.path:
-    sys.path.insert(0, root_dir)
+# Pastikan root direktori proyek selalu ada di sys.path
+ROOT_DIR = str(Path(__file__).resolve().parent)
+if ROOT_DIR not in sys.path:
+    sys.path.insert(0, ROOT_DIR)
 
-# Hapus cache modul lokal dari sys.modules agar perubahan kode selalu terbaca segar saat refresh browser
-for mod in list(sys.modules.keys()):
-    if any(mod.startswith(pkg) for pkg in ["ui", "screens", "core"]):
-        del sys.modules[mod]
+import app
 
-runpy.run_path(os.path.join(root_dir, "app.py"), run_name="__main__")
+if __name__ == "__main__":
+    app.main()

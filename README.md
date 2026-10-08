@@ -146,7 +146,7 @@ streamlit run streamlit_app.py
 ### 1. Prasyarat dan Penyiapan Lingkungan
 ```bash
 # Klon repositori
-git clone https://github.com/username-anda/world-model-business.git
+git clone https://github.com/noorafaelhakimfaudka-droid/world-model-business.git
 cd world-model-business
 
 # Buat dan aktifkan lingkungan virtual
