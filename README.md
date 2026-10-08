@@ -1,6 +1,6 @@
-# Janji: World Model for Business (Edisi Olist)
+# World Model for Business (Olist Edition)
 
-> **"Jangan perbaiki kurirnya dulu. Uji janjinya."**
+> **Simulator Keputusan Logistik & Pengalaman Pelanggan Berbasis Inferensi Kausal dan Pemodelan Kontrafaktual**
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
@@ -13,15 +13,20 @@ Sistem Pendukung Keputusan (*Decision Support System* / DSS) komprehensif berbas
 
 ## 1. Latar Belakang dan Dilema Bisnis
 
+### Kenapa Memilih Masalah Ini Sebagai Proyek?
+Di industri e-commerce, keterlambatan pengiriman adalah titik paling rapuh yang langsung merusak reputasi platform. Olist di Brasil adalah studi kasus operasional yang nyata dan menantang: mengelola hampir 100 ribu pesanan di wilayah seluas benua (8,5 juta km²) tanpa memiliki satu pun gudang atau armada truk pengiriman sendiri—seratus persen bergantung pada kurir pos pihak ketiga.
+
+Ketika keterlambatan terjadi, coba-coba mengubah janji tiba langsung di aplikasi produksi berisiko memicu lonjakan pembatalan belanja di checkout, sementara berinvestasi armada fisik membutuhkan belanja modal (*Capex*) ratusan miliar yang sangat berisiko. Karena itulah dibangun **World Model for Business**: simulator keputusan digital untuk menguji berbagai skenario intervensi kebijakan secara aman di komputer sebelum modal nyata dipertaruhkan di lapangan.
+
 ### Siapa Olist dan Apa Dilemanya?
-Olist adalah platform e-commerce terkemuka di Brasil yang menghubungkan ribuan pelaku UMKM (*sellers*) ke berbagai marketplace digital besar. Model bisnis Olist beroperasi sebagai platform perantara murni:
+Olist adalah platform perantara e-commerce di Brasil yang menghubungkan ribuan pelaku UMKM (*sellers*) ke berbagai marketplace digital besar:
 - **Olist tidak memiliki armada kurir sendiri dan tidak memiliki gudang fisik terpusat.**
 - Seluruh pengiriman mengandalkan kurir pihak ketiga melintasi 27 negara bagian Brasil seluas 8,5 juta km² dengan ketimpangan infrastruktur ekstrem (pengiriman di São Paulo rata-rata 8 hari, sementara ke Roraima mencapai 29 hari).
 - Keberhasilan transaksi sangat bergantung pada dua simpul: **kecepatan seller menyiapkan paket** dan **keandalan transit kurir pihak ketiga**.
 
 ### Fenomena Kritis: "Tebing Kepuasan" dan Retensi Pembeli Pertama
 Dari analisis data empiris terhadap 86.283 pesanan historis, terungkap fakta bisnis yang mengkhawatirkan:
-1. **Hanya 3,07% pembeli yang pernah berbelanja lebih dari satu kali (73,8% adalah pembeli satu kali transaksi).** Artinya, pesanan pertama adalah satu-satunya taruhan hidup-mati reputasi platform.
+1. **Hanya 3,07% pembeli yang pernah berbelanja lebih dari satu kali (73,8% adalah pembeli satu kali transaksi).** Artinya, pesanan pertama adalah penentu segalanya bagi reputasi platform.
 2. **Keterlambatan pengiriman mencapai 8,0% dari total pesanan.**
 3. **Fenomena Tebing Kepuasan:** Begitu paket terlambat melewati estimasi janji tiba, rating kepuasan konsumen terjun bebas:
    - Paket Tepat Waktu: Rata-rata rating **4,3★** (ulasan buruk hanya 9,8%).
@@ -96,7 +101,7 @@ streamlit run streamlit_app.py
 ┌─────────────────────────┐                                             ┌─────────────────────────┐
 │    DATA PENGEMBANGAN    │                                             │   DATA UJI TERKUNCI     │
 │ 86.283 Pesanan (Latih)  │                                             │ 12.801 Pesanan (Holdout)│
-└────────────┬────────────┘                                             │ Segel SHA-256 Terverifikasi
+└────────────┬────────────┘                                             │ Segel SHA-256 Terkunci  │
              │                                                          └─────────────────────────┘
              ├───────────────────────────────────────────────────────────────────────┐
              ▼                                                                       ▼
