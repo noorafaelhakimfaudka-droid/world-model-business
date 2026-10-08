@@ -50,9 +50,9 @@ Proyek ini dibangun untuk menjawab empat pertanyaan strategis dewan direksi:
 
 | Temuan Strategis | Metodologi | Dampak Bisnis Nyata |
 |---|---|---|
-| **1. Dampak Kausal Keterlambatan Pengiriman** | Propensity Score Matching (PSM) dengan Caliper 0,05 + Uji Plasebo | Keterlambatan terbukti secara kausal langsung memotong **1,71★** kepuasan konsumen (p < 0,001). Uji plasebo pada harga pesanan menghasilkan efek R$ 0,00, membuktikan model tidak bias. |
-| **2. Efek Psikologis Janji (The Underpromise Effect)** | Simulasi Kebijakan Kontrafaktual (World Model Blok 1–3) | Menambahkan **+3 hari buffer SLA** pada estimasi tiba di website mencegah **~2.608 ulasan buruk** pada **Capex logistik R$ 0**, jauh lebih efektif daripada program percepatan kurir fisik. |
-| **3. Deteksi Dini Risiko Keterlambatan** | Point-in-Time As-Of Random Forest pada titik T0 & T1 | Mendeteksi pesanan berisiko tinggi dengan **presisi 8,0%** di T0 (vs baseline heuristik 4,4% = **1,8x lift**), menjadi dasar pemantauan terarah tanpa memboroskan voucher kompensasi di awal. |
+| **1. Dampak Kausal Keterlambatan Pengiriman** | Propensity Score Matching (PSM) dengan Caliper 0,05 + Uji Plasebo | Keterlambatan terbukti secara kausal langsung memotong **1,86★** kepuasan konsumen (p < 0,001 pada 6.740 pasang kembar). Uji plasebo pada harga pesanan menghasilkan efek semu hanya R$ 1,60, membuktikan model tidak bias. |
+| **2. Efek Psikologis Janji (The Underpromise Effect)** | Simulasi Kebijakan Kontrafaktual (World Model Blok 1–3) | Menambahkan **+3 hari buffer SLA** pada estimasi tiba di website mencegah **2.608 ulasan buruk** pada **Capex logistik R$ 0**, jauh lebih efektif daripada program percepatan kurir fisik. |
+| **3. Deteksi Dini Risiko Keterlambatan** | Point-in-Time As-Of Random Forest pada titik T0 & T1 | Mendeteksi pesanan berisiko tinggi dengan **presisi 9,3%** di T0 dan melonjak ke **15,3%** di T1, menjadi dasar pemantauan terarah tanpa memboroskan voucher kompensasi di awal. |
 | **4. Valuasi Nilai Retensi dan Titik Impas** | Pemodelan Perilaku Belanja Ulang dan CLV | Setiap ulasan buruk yang dicegah mempertahankan nilai retensi **R$ 14,06** (konservatif) hingga **R$ 92,00** (CLV penuh). Kebijakan buffer SLA menghasilkan surplus bersih **+R$ 182.560**. |
 
 ---
@@ -68,10 +68,10 @@ streamlit run streamlit_app.py
 
 ### 7 Babak Alur Keputusan:
 1. **Babak 1: Dilema Logistik dan Reputasi**: Tebak rating, visualisasi tebing kepuasan, dan 4 metrik kondisi dasar Olist.
-2. **Babak 2: Diagnosis Operasional dan Geografi**: Asimetri wilayah (São Paulo 8,3 hari vs Roraima 29,0 hari), dekomposisi waktu (seller 3,0 hari vs kurir 9,5 hari), Pareto 20 kategori (80% volume), dan peramalan mingguan (WAPE 13,6%).
+2. **Babak 2: Diagnosis Operasional dan Geografi**: Asimetri wilayah (São Paulo 8,3 hari vs Roraima 29,0 hari), dekomposisi waktu (seller 3,0 hari vs kurir 9,5 hari), Pareto 20 kategori (80% volume), dan peramalan mingguan (WAPE 17,0%).
 3. **Babak 3: Matriks Penyelamatan Pelanggan dan Penjual**: Analisis RFM retensi pembeli pertama dan pendampingan 6% seller kritis penyumbang sepertiga keterlambatan.
 4. **Babak 4: Sistem Peringatan Dini CS (T0 dan T1)**: Form evaluasi risiko real-time, meteran 3 zona aksi Plotly, dan batasan jujur presisi model.
-5. **Babak 5: Laboratorium Bukti Kausalitas (PSM Lab)**: Love plot 6.740 pasang kembar identik, estimasi ATE −1,71★, dan kendali mutu uji plasebo.
+5. **Babak 5: Laboratorium Bukti Kausalitas (PSM Lab)**: Love plot 6.740 pasang kembar identik, estimasi ATE −1,86★, dan kendali mutu uji plasebo (R$ 1,60).
 6. **Babak 6: World Model Simulator (Operational Reality Lab)**: 
    - **Kokpit Makro**: Pilihan lingkup kebijakan (Blanket vs Rute Kritis >800 km vs 6% Seller Lelet), pergeseran gelombang SLA dinamis, neraca keuangan P&L kebijakan, dan uji stres toleransi pembatalan checkout.
    - **Inspektur Pesanan Nyata**: Mikrosimulasi 4 kasus transaksi riil dari database Olist.
@@ -103,8 +103,8 @@ streamlit run streamlit_app.py
 ┌─────────────────────────┐                                             ┌─────────────────────────┐
 │  FITUR POINT-IN-TIME    │                                             │   INFERENSI KAUSALITAS  │
 │  T0: Saat Checkout Saja │                                             │   Pencocokan Kembar PSM │
-│  T1: Saat Serah Kurir   │                                             │   ATE = -1,71 Bintang   │
-│  T2: Pasca Pengiriman   │                                             │   Uji Plasebo: R$ 0,00  │
+│  T1: Saat Serah Kurir   │                                             │   ATE = -1,86 Bintang   │
+│  T2: Pasca Pengiriman   │                                             │   Uji Plasebo: R$ 1,60  │
 └────────────┬────────────┘                                             └────────────┬────────────┘
              │                                                                       │
              ▼                                                                       ▼
@@ -131,10 +131,10 @@ streamlit run streamlit_app.py
 |---|---|---|---|
 | [`notebooks/01_business_eda.ipynb`](notebooks/01_business_eda.ipynb) | Eksplorasi Data Bisnis | Statistik Deskriptif, Geocoding | 10 Wawasan Inti Bisnis Olist |
 | [`notebooks/02_clustering.ipynb`](notebooks/02_clustering.ipynb) | Segmentasi Entitas | K-Means RFM, Pemetaan Seller | Profil Pembeli dan 6% Seller Kritis |
-| [`notebooks/03_forecasting.ipynb`](notebooks/03_forecasting.ipynb) | Peramalan Permintaan | Moving Average, Ridge, Exponential Smoothing | WAPE = 13,6% (Skala Mingguan) |
-| [`notebooks/04_predict_late.ipynb`](notebooks/04_predict_late.ipynb) | Deteksi Dini Keterlambatan | Random Forest, Top-K Precision Lift | Presisi T0 = 8,0% (1,8x Baseline) |
+| [`notebooks/03_forecasting.ipynb`](notebooks/03_forecasting.ipynb) | Peramalan Permintaan | Moving Average, Ridge, Exponential Smoothing | WAPE = 17,0% (Skala Mingguan) |
+| [`notebooks/04_predict_late.ipynb`](notebooks/04_predict_late.ipynb) | Deteksi Dini Keterlambatan | Random Forest, Top-K Precision Lift | Presisi T0 = 9,3%, T1 = 15,3% |
 | [`notebooks/05_predict_reviews.ipynb`](notebooks/05_predict_reviews.ipynb) | Sentimen & Ulasan Pelanggan | TF-IDF, N-Grams, Logistic Regression | PR-AUC = 0,38, Akar Masalah Komplain |
-| [`notebooks/06_causal_impact.ipynb`](notebooks/06_causal_impact.ipynb) | Inferensi Kausalitas | Propensity Score Matching (PSM) | ATE = −1,71★ (Bukti Sebab-Akibat) |
+| [`notebooks/06_causal_impact.ipynb`](notebooks/06_causal_impact.ipynb) | Inferensi Kausalitas | Propensity Score Matching (PSM) | ATE = −1,86★ (Bukti Sebab-Akibat) |
 | [`notebooks/07_world_model.ipynb`](notebooks/07_world_model.ipynb) | Mesin Simulasi Sistem | Rantai Blok Probabilistik Terhubung | Lolos Uji Validasi U1–U3 |
 | [`notebooks/08_scenarios.ipynb`](notebooks/08_scenarios.ipynb) | Analisis Skenario Kebijakan | Evaluasi Kebijakan S1, S2, S3 | Bukti Buffer SLA Kalahkan Capex Kurir |
 | [`notebooks/09_business_value.ipynb`](notebooks/09_business_value.ipynb) | Valuasi ROI dan Eksperimen | Atribusi CLV, Analisis Power A/B | Desain A/B Testing (N=1.560/kelompok) |

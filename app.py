@@ -1,6 +1,6 @@
 """
 app.py
-Router Utama Aplikasi "Janji: World Model for Business (Olist Edition)"
+Router Utama Aplikasi "World Model for Business (Olist Edition)"
 Mengatur alur satu keputusan per layar dan Mode Eksplorasi (?m=x)
 """
 
@@ -30,7 +30,7 @@ import screens.s7_roi_ab as s7
 def main():
     # 1. Konfigurasi Halaman Streamlit
     st.set_page_config(
-        page_title="Janji: World Model for Business",
+        page_title="World Model for Business · Simulator Keputusan Logistik",
         page_icon=None,
         layout="wide",
         initial_sidebar_state="collapsed"

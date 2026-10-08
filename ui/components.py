@@ -17,7 +17,7 @@ def render_top_bar(step_title: str = "", current_step: int = 0, total_steps: int
     """Menampilkan penanda progres minimalis di bagian paling atas."""
     col_l, col_r = st.columns([2, 1])
     with col_l:
-        render_html(f'<div style="font-family: \'Newsreader\', serif; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">Janji <span style="font-family: \'Instrument Sans\', sans-serif; font-size: 13px; font-weight: 400; color: var(--ink2); margin-left: 12px;">{step_title}</span></div>')
+        render_html(f'<div style="font-family: \'Newsreader\', serif; font-size: 20px; font-weight: 600; letter-spacing: -0.02em;">World Model for Business <span style="font-family: \'Instrument Sans\', sans-serif; font-size: 13px; font-weight: 400; color: var(--ink2); margin-left: 12px;">{step_title}</span></div>')
     with col_r:
         if current_step > 0:
             render_html(f'<div style="text-align: right; font-size: 13px; color: var(--ink2); font-weight: 500;">Babak {current_step} dari {total_steps}</div>')

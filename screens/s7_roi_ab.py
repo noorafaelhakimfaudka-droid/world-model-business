@@ -103,20 +103,20 @@ def render():
     with col_fin2:
         st.download_button(
             label="Unduh Ringkasan Eksekutif (.md)",
-            data="""# Ringkasan Eksekutif: Janji (World Model for Business)
+            data="""# Ringkasan Eksekutif: World Model for Business (Olist Logistics)
 
 ## 1. Inti Masalah
 Olist tidak memiliki armada kurir dan gudang sendiri. Keterlambatan pengiriman (8,0% pesanan) menjadi pemicu utama anjloknya rating pembeli dari 4,3 bintang menjadi 2,4 bintang. Mengingat 73,8% pembeli hanya belanja satu kali, pesanan pertama yang mengecewakan berarti kehilangan pelanggan selamanya.
 
 ## 2. Bukti Nyata
-Dengan membandingkan ribuan pasang pesanan yang berkarakteristik serupa (rute, berat, dan harga), keterlambatan terbukti secara langsung memotong 1,71 bintang kepuasan pelanggan. Uji kendali mutu membuktikan model analisis ini jujur dan tidak mengada-ada.
+Dengan membandingkan 6.740 pasang pesanan kembar identik yang berkarakteristik serupa (rute, berat, ongkir, dan harga), keterlambatan terbukti secara langsung memotong 1,86 bintang kepuasan pelanggan (Average Treatment Effect murni). Uji kendali mutu placebo membuktikan model analisis ini jujur dan kebal dari korelasi palsu (efek semu hanya R$ 1,60 terhadap rata-rata harga produk R$ 137).
 
 ## 3. Solusi Terpilih
-Daripada menambah armada kurir fisik yang menelan biaya sangat mahal, simulator menunjukkan bahwa menambahkan 3 hari pada estimasi janji pengiriman berhasil mencegah ~2.600 ulasan buruk dengan biaya operasional logistik R$ 0.
+Daripada menambah armada kurir fisik yang menelan biaya sangat mahal, simulator menunjukkan bahwa menambahkan 3 hari pada estimasi janji pengiriman berhasil mencegah 2.608 ulasan buruk (memangkas angka telat dari 8,0% ke 2,0%) dengan biaya modal logistik R$ 0.
 
 ## 4. Langkah Berikutnya (Uji Lapangan)
-Lakukan A/B testing terkontrol dengan ~1.560 pesanan per kelompok (~3 minggu) untuk memvalidasi kebijakan ini dan memastikan penambahan estimasi tidak menurunkan tingkat konversi di halaman checkout.
+Lakukan A/B testing terkontrol dengan ~1.560 pesanan per kelompok (~3 minggu) untuk memvalidasi kebijakan ini dan memastikan penambahan estimasi tidak menurunkan tingkat konversi di halaman checkout (toleransi drop-off < 0,5%).
 """,
-            file_name="ringkasan_eksekutif_janji.md",
+            file_name="ringkasan_eksekutif_wmfb.md",
             mime="text/markdown"
         )

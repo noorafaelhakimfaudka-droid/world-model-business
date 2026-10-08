@@ -4,7 +4,7 @@ Babak 2: Diagnosis Operasional dan Geografi
 1. Asimetri Geografi (SP vs RR)
 2. Dekomposisi Waktu (Seller 3 hari vs Kurir 9 hari)
 3. Hukum Pareto Kategori (20 kategori = 80% volume)
-4. Peramalan Permintaan (WAPE 13,6%)
+4. Peramalan Permintaan (WAPE 17,0%)
 """
 
 import streamlit as st
@@ -124,9 +124,9 @@ def render():
         render_html("""
         <div class="card">
         <div style="font-size: 13px; text-transform: uppercase; color: var(--ink2); font-weight: 600;">Prediksi Beban Pesanan</div>
-        <div style="font-size: 24px; font-weight: 700; color: var(--good); margin: 6px 0;">Margin Error 13,6% (Mingguan)</div>
+        <div style="font-size: 24px; font-weight: 700; color: var(--good); margin: 6px 0;">Error WAPE 17,0% (Mingguan)</div>
         <div style="font-size: 14px; color: var(--ink2); line-height: 20px;">
-        Prediksi volume mingguan kami sangat akurat (selisih rata-rata hanya 13,6%, jauh di bawah batas toleransi bisnis 25%). Ini membuat persiapan kapasitas gudang dan kurir jauh lebih terencana.
+        Prediksi volume mingguan model baseline (WAPE 17,0%) berada jauh di bawah batas toleransi bisnis 25%. Ini membuat perencanaan kapasitas gudang dan kurir mitra logistik terukur dengan baik.
         </div>
         </div>
         """)

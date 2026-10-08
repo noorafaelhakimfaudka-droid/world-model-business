@@ -51,7 +51,5 @@ docs/NASKAH_STORYTELLING*.md
 docs/PROMPT_PRESENTATION_DECK.md
 docs/RANCANGAN_PRESENTATION_DECK.md
 docs/storytelling_mobile.html
-scripts/build_presentation_pptx.py
-scripts/build_storytelling_per_slide.py
-scripts/build_storytelling_with_code.py
-scripts/rebuild_spacious_presentation.py
+scripts/
+pptx_slides_dump.txt

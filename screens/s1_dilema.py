@@ -47,7 +47,7 @@ def render():
         render_top_bar("Babak 1: Ungkap Kausalitas", current_step=1, total_steps=7)
         
         st.markdown(label_klaim("TEMUAN UTAMA", "B"), unsafe_allow_html=True)
-        hero_number("−1,71", unit="bintang", warna="var(--bad)", subteks="Penurunan rating murni yang dialami pesanan telat dibanding pesanan serupa yang tiba tepat waktu.")
+        hero_number("−1,86", unit="bintang", warna="var(--bad)", subteks="Penurunan rating murni (ATE kausal) pada 6.740 pasang pesanan kembar identik yang disetarakan.")
         
         tebakan_user = st.session_state.get("tebakan", "3,0 – 3,9")
         if tebakan_user == "2,0 – 2,9":
@@ -89,11 +89,11 @@ def render():
                 st.session_state["sub_step_1"] = "konteks"
                 st.rerun()
         with col_btn2:
-            with st.expander("Dari mana angka −1,71 bintang ini?"):
+            with st.expander("Dari mana angka −1,86 bintang ini?"):
                 st.write(
-                    "Kami membandingkan ribuan pasang pesanan yang kondisinya serupa — rute pengiriman, biaya ongkir, "
+                    "Analisis ini membandingkan 6.740 pasang pesanan kembar identik (Propensity Score Matching) yang kondisinya serupa — rute pengiriman, biaya ongkir, "
                     "kategori produk, berat barang, dan harganya sama persis. Satu-satunya perbedaan: yang satu tiba tepat waktu, "
-                    "dan yang satu lagi terlambat. Selisih kepuasan murni akibat keterlambatan ini terbukti sebesar −1,71 bintang."
+                    "dan yang satu lagi terlambat. Selisih kepuasan murni akibat keterlambatan ini terbukti sebesar −1,86 bintang (dibandingkan gap naif −1,83 bintang)."
                 )
 
     # ==========================================
