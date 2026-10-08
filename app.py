@@ -17,6 +17,8 @@ import streamlit as st
 from ui.theme import inject_theme, setup_plotly_template
 from ui.components import render_html
 
+import importlib
+
 # Impor layar aplikasi
 import screens.s0_pembuka as s0
 import screens.s1_dilema as s1
@@ -26,6 +28,16 @@ import screens.s4_early_warning as s4
 import screens.s5_psm_lab as s5
 import screens.s6_world_model as s6
 import screens.s7_roi_ab as s7
+
+# Muat ulang modul secara dinamis agar perubahan berkas langsung aktif tanpa simpanan cache usang
+importlib.reload(s0)
+importlib.reload(s1)
+importlib.reload(s2)
+importlib.reload(s3)
+importlib.reload(s4)
+importlib.reload(s5)
+importlib.reload(s6)
+importlib.reload(s7)
 
 def main():
     # 1. Konfigurasi Halaman Streamlit
