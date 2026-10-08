@@ -7,44 +7,79 @@
 [![Tests: Pytest Passing](https://img.shields.io/badge/tests-13%20passed-brightgreen.svg)](https://pytest.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Sistem Pendukung Keputusan (*Decision Support System* / DSS) komprehensif yang mengintegrasikan **Machine Learning**, **Inferensi Kausal (Propensity Score Matching)**, dan **Simulasi Kontrafaktual Stokastik (World Model)** pada 99.084 transaksi nyata e-commerce Olist (Brasil).
-
-Alih-alih sekadar mengejar skor akurasi model di ruang hampa, proyek ini dibangun dari sudut pandang strategi kepemimpinan eksekutif: **Bagaimana data science dapat memitigasi risiko keputusan operasional bernilai ratusan ribu Real sebelum modal fisik digelontorkan?**
+Sistem Pendukung Keputusan (*Decision Support System* / DSS) komprehensif berbasis data 99.084 transaksi nyata e-commerce Olist (Brasil). Proyek ini memadukan **Machine Learning**, **Inferensi Kausal (Propensity Score Matching)**, dan **Simulasi Kontrafaktual Stokastik (World Model)** untuk memitigasi risiko keputusan operasional bernilai ratusan ribu Real sebelum modal fisik digelontorkan.
 
 ---
 
-## 1. Ringkasan Eksekutif dan Temuan Kunci
+## 1. Latar Belakang dan Dilema Bisnis
+
+### Siapa Olist dan Apa Dilemanya?
+Olist adalah platform e-commerce terkemuka di Brasil yang menghubungkan ribuan pelaku UMKM (*sellers*) ke berbagai marketplace digital besar. Model bisnis Olist beroperasi sebagai platform perantara murni:
+- **Olist tidak memiliki armada kurir sendiri dan tidak memiliki gudang fisik terpusat.**
+- Seluruh pengiriman mengandalkan kurir pihak ketiga melintasi 27 negara bagian Brasil seluas 8,5 juta km² dengan ketimpangan infrastruktur ekstrem (pengiriman di São Paulo rata-rata 8 hari, sementara ke Roraima mencapai 29 hari).
+- Keberhasilan transaksi sangat bergantung pada dua simpul: **kecepatan seller menyiapkan paket** dan **keandalan transit kurir pihak ketiga**.
+
+### Fenomena Kritis: "Tebing Kepuasan" dan Retensi Pembeli Pertama
+Dari analisis data empiris terhadap 86.283 pesanan historis, terungkap fakta bisnis yang mengkhawatirkan:
+1. **Hanya 3,07% pembeli yang pernah berbelanja lebih dari satu kali (73,8% adalah pembeli satu kali transaksi).** Artinya, pesanan pertama adalah satu-satunya taruhan hidup-mati reputasi platform.
+2. **Keterlambatan pengiriman mencapai 8,0% dari total pesanan.**
+3. **Fenomena Tebing Kepuasan:** Begitu paket terlambat melewati estimasi janji tiba, rating kepuasan konsumen terjun bebas:
+   - Paket Tepat Waktu: Rata-rata rating **4,3★** (ulasan buruk hanya 9,8%).
+   - Paket Terlambat 1–3 Hari: Rata-rata rating langsung anjlok ke **2,4★** (ulasan buruk melonjak ke 21,4%).
+   - Paket Terlambat >7 Hari: Rata-rata rating hancur ke **1,2★** (ulasan buruk mencapai 54,3%).
+
+### Jebakan Refleks Manajemen
+Refleks umum manajemen dalam menghadapi krisis keterlambatan biasanya adalah **"Nafsu Logistik Fisik"**: menggelontorkan anggaran ratusan ribu Real untuk menyewa jalur kilat armada kurir atau menjatuhkan sanksi denda pada seller. 
+
+Namun benarkah kurirnya yang harus diperbaiki? Proyek ini membuktikan bahwa akar masalah terbesar sebenarnya terletak pada **ekspektasi janji tiba (SLA) yang tidak realistis**.
+
+---
+
+## 2. Pertanyaan Inti Proyek
+
+Proyek ini dibangun untuk menjawab empat pertanyaan strategis dewan direksi:
+
+1. **Di titik mana marketplace paling banyak kehilangan nilai (rating ulasan, retensi, pendapatan) akibat keterlambatan pengiriman?**
+2. **Apakah keterlambatan benar-benar penyebab kausal anjloknya rating, atau sekadar korelasi palsu akibat rute jauh dan paket berat?**
+3. **Seberapa awal risiko keterlambatan dapat dideteksi secara akurat tanpa membocorkan data masa depan (as-of prediction di T0 dan T1)?**
+4. **Apa yang terjadi di "dunia alternatif" jika kita mengubah janji tiba dibandingkan menambah biaya kurir fisik? Tindakan mana yang paling menguntungkan secara finansial (P&L ROI)?**
+
+---
+
+## 3. Ringkasan Eksekutif dan Temuan Kunci
 
 | Temuan Strategis | Metodologi | Dampak Bisnis Nyata |
 |---|---|---|
-| **1. Dampak Kausal Keterlambatan Pengiriman** | Propensity Score Matching (PSM) dengan Caliper 0,05 + Uji Plasebo | Keterlambatan terbukti secara kausal langsung memotong **1,71★** kepuasan konsumen (p < 0,001). Ini bukan kebetulan akibat rute jauh atau barang berat. |
-| **2. Efek Psikologis Janji (The Underpromise Effect)** | Simulasi Kebijakan Kontrafaktual (World Model Blok 1–3) | Menambahkan **+3 hari buffer SLA** pada estimasi tiba di website mencegah **~2.608 ulasan buruk** pada **Capex logistik R$ 0**, mengalahkan program percepatan kurir fisik. |
-| **3. Deteksi Dini Risiko Keterlambatan** | Point-in-Time As-Of Random Forest pada titik T0 & T1 | Mendeteksi pesanan berisiko tinggi dengan **presisi 8,0%** di T0 (vs baseline heuristik 4,4% = **1,8x lift**), menjadi dasar pemantauan terarah tanpa memboroskan anggaran kompensasi. |
-| **4. Valuasi Nilai Retensi dan ROI Bisnis** | Pemodelan Perilaku Belanja Ulang dan CLV | Mengingat hanya 3,07% pembeli yang berbelanja ulang di Olist, perlindungan pesanan pertama sangat krusial. Setiap ulasan buruk yang dicegah mempertahankan nilai retensi **R$ 14,06 hingga R$ 92,00**. |
+| **1. Dampak Kausal Keterlambatan Pengiriman** | Propensity Score Matching (PSM) dengan Caliper 0,05 + Uji Plasebo | Keterlambatan terbukti secara kausal langsung memotong **1,71★** kepuasan konsumen (p < 0,001). Uji plasebo pada harga pesanan menghasilkan efek R$ 0,00, membuktikan model tidak bias. |
+| **2. Efek Psikologis Janji (The Underpromise Effect)** | Simulasi Kebijakan Kontrafaktual (World Model Blok 1–3) | Menambahkan **+3 hari buffer SLA** pada estimasi tiba di website mencegah **~2.608 ulasan buruk** pada **Capex logistik R$ 0**, jauh lebih efektif daripada program percepatan kurir fisik. |
+| **3. Deteksi Dini Risiko Keterlambatan** | Point-in-Time As-Of Random Forest pada titik T0 & T1 | Mendeteksi pesanan berisiko tinggi dengan **presisi 8,0%** di T0 (vs baseline heuristik 4,4% = **1,8x lift**), menjadi dasar pemantauan terarah tanpa memboroskan voucher kompensasi di awal. |
+| **4. Valuasi Nilai Retensi dan Titik Impas** | Pemodelan Perilaku Belanja Ulang dan CLV | Setiap ulasan buruk yang dicegah mempertahankan nilai retensi **R$ 14,06** (konservatif) hingga **R$ 92,00** (CLV penuh). Kebijakan buffer SLA menghasilkan surplus bersih **+R$ 182.560**. |
 
 ---
 
-## 2. Aplikasi Pendukung Keputusan (Streamlit DSS)
+## 4. Aplikasi Pendukung Keputusan (Streamlit DSS)
 
-Aplikasi dasbor interaktif produksi siap pakai disertakan untuk presentasi eksekutif dan eksplorasi skenario langsung:
+Aplikasi web interaktif disertakan sebagai kokpit pengambilan keputusan bagi pimpinan operasional dan dewan direksi:
 
 ```bash
 # Menjalankan aplikasi web secara lokal
 streamlit run streamlit_app.py
 ```
 
-### Fitur Utama Antarmuka:
-1. **Dasbor KPI Eksekutif & 10 Temuan Bisnis**: Konsentrasi volume Pareto, ketimpangan geografis (São Paulo 8 hari vs Roraima 29 hari), dan fenomena tebing kepuasan (rating anjlok dari 4,3★ ke 2,4★ saat paket telat).
-2. **Segmentasi Pelanggan (RFM) & Diagnosis Penjual**: Profil 73,8% pembeli satu kali transaksi dan diagnosis 6% penjual kritis penyumbang 34% keterlambatan.
-3. **Peramalan Permintaan Operasional**: Prediksi deret waktu mingguan 4 pekan ke depan per kategori produk (WAPE = 13,6%).
-4. **Sistem Peringatan Dini Keterlambatan**: Skoring risiko pesanan saat checkout (T0) dan saat diserahkan ke kurir (T1) dengan meteran 3 zona aksi.
-5. **Laboratorium Kausalitas (PSM Lab)**: Visualisasi pasangan kembar identik (*matched twins*) pembuktian kausal ATE −1,71★ dan kontrol mutu plasebo R$ 0,00.
-6. **World Model Simulator (Operational Reality Lab)**: Kokpit kebijakan makro dengan pergeseran gelombang SLA dinamis, neraca keuangan P&L kebijakan, uji stres toleransi pembatalan checkout, dan inspektur mikrosimulasi 4 kasus pesanan nyata.
-7. **Kalkulator Titik Impas Voucher CS & Protokol A/B Testing**: Perhitungan sensitivitas kompensasi dan penentuan ukuran sampel uji coba lapangan (~1.560 pesanan per kelompok).
+### 7 Babak Alur Keputusan:
+1. **Babak 1: Dilema Logistik dan Reputasi**: Tebak rating, visualisasi tebing kepuasan, dan 4 metrik kondisi dasar Olist.
+2. **Babak 2: Diagnosis Operasional dan Geografi**: Asimetri wilayah (São Paulo 8,3 hari vs Roraima 29,0 hari), dekomposisi waktu (seller 3,0 hari vs kurir 9,5 hari), Pareto 20 kategori (80% volume), dan peramalan mingguan (WAPE 13,6%).
+3. **Babak 3: Matriks Penyelamatan Pelanggan dan Penjual**: Analisis RFM retensi pembeli pertama dan pendampingan 6% seller kritis penyumbang sepertiga keterlambatan.
+4. **Babak 4: Sistem Peringatan Dini CS (T0 dan T1)**: Form evaluasi risiko real-time, meteran 3 zona aksi Plotly, dan batasan jujur presisi model.
+5. **Babak 5: Laboratorium Bukti Kausalitas (PSM Lab)**: Love plot 6.740 pasang kembar identik, estimasi ATE −1,71★, dan kendali mutu uji plasebo.
+6. **Babak 6: World Model Simulator (Operational Reality Lab)**: 
+   - **Kokpit Makro**: Pilihan lingkup kebijakan (Blanket vs Rute Kritis >800 km vs 6% Seller Lelet), pergeseran gelombang SLA dinamis, neraca keuangan P&L kebijakan, dan uji stres toleransi pembatalan checkout.
+   - **Inspektur Pesanan Nyata**: Mikrosimulasi 4 kasus transaksi riil dari database Olist.
+7. **Babak 7: Kalkulator ROI Finansial & Protokol A/B Testing**: Titik impas voucher kompensasi CS dan rancangan eksperimen acak terkontrol (~1.560 pesanan per kelompok).
 
 ---
 
-## 3. Kerangka Arsitektur Sistem
+## 5. Kerangka Arsitektur Sistem
 
 ```
                           ┌──────────────────────────────────────────────┐
@@ -81,16 +116,16 @@ streamlit run streamlit_app.py
 
 ---
 
-## 4. Pagar Pembatas Metodologi dan Integritas Rekayasa
+## 6. Pagar Pembatas Metodologi dan Integritas Rekayasa
 
-- **Nol Kebocoran Masa Depan (Zero Future Leakage)**: Seluruh rekayasa fitur diisolasi secara ketat berdasarkan stempel waktu ketersediaan informasi (*as-of timestamp*). Fitur di titik T0 tidak mengandung satu pun kolom yang baru tercipta pasca-checkout.
-- **Pemisahan Berurutan Waktu (Chronological Split)**: Tidak ada pengacakan data sembarangan (*random split*) pada data deret waktu. Data dilatih pada masa lalu dan diuji pada masa depan dengan jeda pengaman (*buffer window*).
-- **Segel Kriptografi Data Uji**: Sebanyak 12.801 pesanan dipisahkan dan disegel dengan hash kriptografi SHA-256 (`dfa121510c806f39cf24b894ae470a7e512af2a987c5ba7cf40dd871dd3ff84e`) dan tidak pernah disentuh selama pelatihan model.
-- **Disiplin Angka Anti-Halusinasi**: Setiap angka yang dilaporkan berasal murni dari eksekusi kode nyata dengan verifikasi ganda (rekonsiliasi SQL dan pandas).
+- **Nol Kebocoran Masa Depan (Zero Future Leakage)**: Seluruh fitur dipartisi berdasarkan stempel waktu ketersediaan (*as-of timestamp*). Fitur di titik T0 tidak mengandung satu pun variabel pasca-checkout.
+- **Pemisahan Berurutan Waktu (Chronological Split)**: Tidak menggunakan pengacakan data sembarangan (*random split*) pada data deret waktu. Latih di masa lalu, uji di masa depan dengan jeda pengaman (*buffer period*).
+- **Segel Kriptografi Data Uji**: Sebanyak 12.801 pesanan dipisahkan dan disegel dengan hash kriptografi SHA-256 (`dfa121510c806f39cf24b894ae470a7e512af2a987c5ba7cf40dd871dd3ff84e`) dan tidak disentuh selama fase eksperimen.
+- **Disiplin Angka Anti-Halusinasi**: Seluruh metrik berasal murni dari eksekusi kode nyata dengan verifikasi ganda (rekonsiliasi SQL dan pandas).
 
 ---
 
-## 5. Peta Repositori dan Alur Analisis
+## 7. Peta Repositori dan Alur Analisis
 
 | Berkas Analisis | Fokus Bahasan | Metode dan Model Utama | Luaran Utama |
 |---|---|---|---|
@@ -106,7 +141,7 @@ streamlit run streamlit_app.py
 
 ---
 
-## 6. Panduan Instalasi dan Pengujian Cepat
+## 8. Panduan Instalasi dan Pengujian Cepat
 
 ### 1. Prasyarat dan Penyiapan Lingkungan
 ```bash
@@ -135,7 +170,7 @@ streamlit run streamlit_app.py
 
 ---
 
-## 7. Peluang Pengembangan Lanjutan (Roadmap)
+## 9. Peluang Pengembangan Lanjutan (Roadmap)
 
 Proyek ini dirancang modular sehingga siap dikembangkan lebih jauh untuk kebutuhan produksi tingkat enterprise:
 
@@ -147,10 +182,12 @@ Proyek ini dirancang modular sehingga siap dikembangkan lebih jauh untuk kebutuh
    Integrasi peta koridor logistik Brasil menggunakan PyDeck/Folium untuk menganalisis simpul transit logistik kritis antar-negara bagian secara visual.
 4. **Ekstraksi Topik Ulasan Berbasis LLM Lokal**:
    Pengelompokan otomatis keluhan tekstual 13.000 ulasan buruk menggunakan model bahasa terarah untuk mendiagnosis apakah komplain berakar pada kerusakan fisik barang, perilaku kurir, atau salah ekspektasi deskripsi produk.
+5. **Replikasi Metodologi pada Ekosistem E-Commerce Indonesia**:
+   Menerapkan kerangka kerja World Model & As-Of Features ini pada dataset transaksi e-commerce domestik untuk membuktikan adaptabilitas metodologi pada tantangan logistik kepulauan nusantara.
 
 ---
 
-## 8. Lisensi dan Sumber Data
+## 10. Lisensi dan Sumber Data
 
 - **Dataset**: [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) yang dipublikasikan secara terbuka di Kaggle.
 - **Lisensi Kode**: Dirilis di bawah lisensi terbuka [MIT License](LICENSE).
