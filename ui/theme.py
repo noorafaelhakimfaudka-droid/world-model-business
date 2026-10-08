@@ -41,8 +41,25 @@ html, body, .stApp {
 }
 
 /* Sembunyikan chrome default Streamlit agar tampilan murni seperti web app independen */
-header[data-testid="stHeader"], footer, #MainMenu, [data-testid="stSidebar"] {
+header[data-testid="stHeader"], footer, #MainMenu, [data-testid="stSidebar"], [data-testid="stToolbar"] {
   display: none !important;
+}
+
+/* Hilangkan flicker skeleton loader yang membuat tampilan patah-patah */
+[data-testid="stSkeleton"] {
+  display: none !important;
+}
+
+/* Animasi Masuk Halus (Fade & Gentle Slide) */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .block-container {
@@ -50,6 +67,8 @@ header[data-testid="stHeader"], footer, #MainMenu, [data-testid="stSidebar"] {
   padding-top: 36px !important;
   padding-bottom: 96px !important;
   margin: 0 auto !important;
+  animation: fadeInUp 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform;
 }
 
 .serif { font-family: 'Newsreader', Georgia, serif; font-weight: 400; }
@@ -64,6 +83,10 @@ header[data-testid="stHeader"], footer, #MainMenu, [data-testid="stSidebar"] {
   border-radius: 16px;
   padding: 24px;
   margin-bottom: 16px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.card:hover {
+  border-color: rgba(20, 19, 15, 0.22);
 }
 .card.on {
   border: 2px solid var(--ink) !important;

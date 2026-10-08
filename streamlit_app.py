@@ -12,9 +12,7 @@ ROOT_DIR = str(Path(__file__).resolve().parent)
 if ROOT_DIR not in sys.path:
     sys.path.insert(0, ROOT_DIR)
 
-import importlib
 import app
-importlib.reload(app)
 
 if __name__ == "__main__":
     app.main()
